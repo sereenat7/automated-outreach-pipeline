@@ -34,6 +34,7 @@ def print_summary(contacts: list) -> None:
     table.add_column("Company", style="cyan")
     table.add_column("Contact", style="green")
     table.add_column("Title")
+    table.add_column("LinkedIn", style="blue")
     table.add_column("Email")
 
     for contact in contacts:
@@ -41,6 +42,7 @@ def print_summary(contacts: list) -> None:
             contact.company_name or contact.company_domain,
             contact.full_name,
             contact.job_title or "—",
+            contact.linkedin_url or "—",
             contact.email or "—",
         )
 
