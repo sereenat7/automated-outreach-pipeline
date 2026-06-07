@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Outreach Pipeline</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+
+    <main class="container">
+      <header class="hero">
+        <p class="eyebrow">Vocallabs / Subspace · SDE Assignment</p>
+        <h1>🚀 Automated Outreach Pipeline</h1>
+        <p class="subtitle">One domain in. Personalized outreach out. Zero tab-switching.</p>
+      </header>
+
+      {% if not config_ok %}
+      <section class="alert alert-error">
+        ⚠️ Missing API keys in <code>.env</code>: {{ missing | join(', ') }}
+      </section>
+      {% endif %}
+
+      <section class="card form-card">
+        <div class="form-grid">
+          <label>
+            <span>Seed domain</span>
+            <input id="domain" type="text" placeholder="stripe.com" value="stripe.com" />
+          </label>
+          <label>
+            <span>Company limit</span>
+            <input id="limit" type="number" min="1" max="25" value="5" />
+          </label>
+        </div>
+        <label class="checkbox">
+          <input id="dryRun" type="checkbox" checked />
+          <span>🧪 Dry run (no emails sent)</span>
+        </label>
+        <button id="runBtn" class="btn btn-primary" {% if not config_ok %}disabled{% endif %}>
+          Run Pipeline
+        </button>
+      </section>
+
+      <section class="pipeline-steps">
+        <div class="step" data-step="ocean">
+          <span>🌊</span>
+          <div>
+            <strong>Ocean.io</strong>
+            <p>Lookalike companies</p>
+          </div>
+        </div>
+        <div class="step" data-step="prospeo-search">
+          <span>🔎</span>
+          <div>
+            <strong>Prospeo</strong>
+            <p>Decision-makers + LinkedIn</p>
+          </div>
+        </div>
+        <div class="step" data-step="prospeo-enrich">
+          <span>✉️</span>
+          <div>
+            <strong>Prospeo Enrich</strong>
+            <p>Verified emails</p>
+          </div>
+        </div>
+        <div class="step" data-step="brevo">
+          <span>📬</span>
+          <div>
+            <strong>Brevo</strong>
+            <p>Send outreach</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <h2>📋 Live logs</h2>
+          <span id="statusBadge" class="badge idle">Idle</span>
+        </div>
+        <div id="logs" class="logs">
+          <p class="muted">Hit run and watch the pipeline work.</p>
+        </div>
+      </section>
+
+      <section class="card hidden" id="resultsCard">
+        <div class="card-header">
+          <h2>👥 Outreach summary</h2>
+          <span id="contactCount" class="badge">0 contacts</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Company</th>
+                <th>Contact</th>
+                <th>Title</th>
+                <th>LinkedIn</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody id="contactsTable"></tbody>
+          </table>
+        </div>
+        <div id="confirmArea" class="confirm-area hidden">
+          <p>🛡️ Ready to send outreach emails. Confirm only if you mean it.</p>
+          <button id="sendBtn" class="btn btn-danger">Send emails</button>
+        </div>
+      </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+</html>

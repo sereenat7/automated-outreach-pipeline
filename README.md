@@ -14,8 +14,8 @@
 *Built by [Sereena Thomas](https://github.com/sereenat7) · SDE Intern Take-Home · Vocallabs / Subspace*
 
 [Quick Start](#-quick-start) ·
-[How It Works](#-how-it-works) ·
-[Usage](#-usage) ·
+[Web UI](#-web-ui-bonus) ·
+[CLI Usage](#-cli-usage) ·
 [Demo Output](#-demo-output) ·
 [Project Structure](#-project-structure)
 
@@ -77,6 +77,7 @@ flowchart LR
 - 📊 **Pretty CLI** — Rich tables with company, contact, title, LinkedIn, email
 - 🎨 **Personalized copy** — emails use name, company, and job title
 - 🔐 **Idempotent sends** — no accidental double-emails on retry
+- 🖥️ **Web UI (bonus)** — same pipeline, but in a browser with live logs + confirm button
 
 ---
 
@@ -129,7 +130,28 @@ No emails sent. Full pipeline. Perfect for your first vibe check. 😌
 
 ---
 
-## 🖥️ Usage
+## 🖥️ Web UI (Bonus)
+
+> Not required for the assignment — but if you want that *chef's kiss* demo moment in the browser. 👩‍🍳
+
+```bash
+pip install -r requirements.txt
+python web/app.py
+```
+
+Open **http://localhost:5000** and you'll get:
+
+- 🌍 Domain input + company limit slider
+- 🧪 Dry-run toggle
+- 📡 Live stage progress (Ocean → Prospeo → Enrich → Brevo)
+- 📋 Contact summary table with LinkedIn links
+- 🛡️ Confirm-before-send button (same safety checkpoint as CLI)
+
+The UI uses the **exact same pipeline code** as the CLI — no duplicated logic.
+
+---
+
+## 🖥️ CLI Usage
 
 ```bash
 # 🏃 Full run (25 companies, with safety prompt)
@@ -203,6 +225,11 @@ Your reputation > automation speed. Always. 💅
 ```
 automated-outreach-pipeline/
 ├── 🎬 main.py              # CLI boss — runs the whole show
+├── 🔁 pipeline_runner.py   # Shared orchestration (CLI + Web UI)
+├── 🌐 web/
+│   ├── app.py              # Flask web UI
+│   ├── templates/          # Dashboard HTML
+│   └── static/             # CSS + JS
 ├── ⚙️  config.py            # Env vars & limits
 ├── 📦 models.py            # Company & Contact models
 ├── stages/
